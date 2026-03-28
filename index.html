@@ -24,6 +24,7 @@
       --accent2: #00d4aa;
       --text: #dde3f0;
       --text-mute: #6b7899;
+      --heading: #ffffff;
       --code-bg: #0a0d14;
       --warn-bg: rgba(255, 190, 50, 0.08);
       --warn-bdr: #e6a817;
@@ -37,6 +38,27 @@
       --mono: 'IBM Plex Mono', monospace;
       --sans: 'IBM Plex Sans JP', sans-serif;
       --display: 'Syne', sans-serif;
+    }
+
+    :root[data-theme='light'] {
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --panel: #f1f3f5;
+      --border: #dee2e6;
+      --accent: #3b6ef8;
+      --accent2: #00a884;
+      --text: #212529;
+      --text-mute: #6c757d;
+      --heading: #111111;
+      --code-bg: #e9ecef;
+      --warn-bg: rgba(255, 190, 50, 0.15);
+      --warn-bdr: #e6a817;
+      --info-bg: rgba(59, 110, 248, 0.1);
+      --info-bdr: #3b6ef8;
+      --tip-bg: rgba(0, 212, 170, 0.1);
+      --tip-bdr: #00d4aa;
+      --danger-bg: rgba(240, 70, 80, 0.1);
+      --danger-bdr: #f04650;
     }
 
     *,
@@ -73,7 +95,7 @@
       font-size: 16px;
       font-weight: 800;
       letter-spacing: .08em;
-      color: #fff;
+      color: var(--heading);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -253,7 +275,7 @@
       font-family: var(--display);
       font-weight: 700;
       line-height: 1.3;
-      color: #fff;
+      color: var(--heading);
     }
 
     #preview h1 {
@@ -338,7 +360,7 @@
     }
 
     #preview strong {
-      color: #fff;
+      color: var(--heading);
       font-weight: 600;
     }
 
@@ -562,6 +584,8 @@
       <div class="dot"></div>MD<span>·</span>PREVIEW
     </div>
     <div class="header-actions">
+      <button class="btn" onclick="toggleTheme()">テーマ切替</button>
+      <button class="btn" onclick="showAppSource()">全ソース表示</button>
       <button class="btn" id="btn-raw" onclick="toggleRaw()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polyline points="16 18 22 12 16 6" />
@@ -610,11 +634,25 @@
   <div id="toast"></div>
 
   <style>
-    #sample-dlg::backdrop{background:rgba(0,0,0,0.6);backdrop-filter:blur(2px)}
+    #sample-dlg::backdrop, #app-src-dlg::backdrop {background:rgba(0,0,0,0.6);backdrop-filter:blur(2px)}
   </style>
+
+  <dialog id="app-src-dlg" style="margin:auto;border:none;border-radius:8px;background:var(--surface);color:var(--text);padding:0;max-width:800px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+    <div class="dlg-header" style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)">
+      <h4 style="margin:0;color:var(--heading)">index.html 全ソースコード</h4>
+      <div class="dlg-actions" style="display:flex;align-items:center;gap:12px">
+        <button class="btn primary" onclick="copyAppSource()">クリップボードにコピー</button>
+        <button class="dlg-close" onclick="document.getElementById('app-src-dlg').close()" style="background:transparent;border:none;color:var(--text-mute);font-size:20px;cursor:pointer;line-height:1;transition:color 0.2s">&times;</button>
+      </div>
+    </div>
+    <div class="dlg-body" style="padding:0;max-height:70vh;overflow-y:auto;background:var(--code-bg)">
+      <pre id="app-src-content" style="margin:0;padding:20px;background:transparent;border:none;font-size:12px;line-height:1.7;color:#8ba5d4;white-space:pre-wrap;word-break:break-all"></pre>
+    </div>
+  </dialog>
+
   <dialog id="sample-dlg" style="margin:auto;border:none;border-radius:8px;background:var(--surface);color:var(--text);padding:0;max-width:800px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.5);">
     <div class="dlg-header" style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)">
-      <h4 style="margin:0;color:#fff">MD Preview 入力例</h4>
+      <h4 style="margin:0;color:var(--heading)">MD Preview 入力例</h4>
       <div class="dlg-actions" style="display:flex;align-items:center;gap:12px">
         <button class="btn primary" onclick="insertSampleAndClose()">入力例をコードに反映</button>
         <button class="dlg-close" onclick="document.getElementById('sample-dlg').close()" style="background:transparent;border:none;color:var(--text-mute);font-size:20px;cursor:pointer;line-height:1;transition:color 0.2s">&times;</button>
@@ -938,6 +976,62 @@ ${body}
       });
       a.click();
       showToast('✓ HTMLを保存しました');
+    }
+
+    // ── テーマ切替 ──────────────────────────────────────────
+    function toggleTheme() {
+      const root = document.documentElement;
+      const t = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', t);
+      const isLight = t === 'light';
+      
+      // Mermaid 再初期化用パラメータ
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isLight ? 'base' : 'dark',
+        securityLevel: 'loose',
+        themeVariables: isLight ? {
+          background: '#ffffff',
+          primaryColor: '#f1f3f5',
+          primaryTextColor: '#212529',
+          primaryBorderColor: '#3b6ef8',
+          lineColor: '#6c757d',
+          secondaryColor: '#f1f3f5',
+          tertiaryColor: '#f8f9fa',
+        } : {
+          background: '#171b26',
+          primaryColor: '#1d2232',
+          primaryTextColor: '#dde3f0',
+          primaryBorderColor: '#3b6ef8',
+          lineColor: '#6b7899',
+          secondaryColor: '#1d2232',
+          tertiaryColor: '#0f1117',
+        }
+      });
+      render();
+    }
+
+    // ── アプリ全体のソースコード表示 ────────────────────────────────
+    function showAppSource() {
+      fetch(location.href)
+        .then(res => res.text())
+        .then(text => {
+          document.getElementById('app-src-content').textContent = text;
+          document.getElementById('app-src-dlg').showModal();
+        })
+        .catch(err => {
+          // ローカルなどでfetchが失敗した時のフォールバック
+          const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+          document.getElementById('app-src-content').textContent = html;
+          document.getElementById('app-src-dlg').showModal();
+        });
+    }
+
+    function copyAppSource() {
+      const text = document.getElementById('app-src-content').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✓ クリップボードにコピーしました');
+      });
     }
 
     // ── ユーティリティ ──────────────────────────────────────
