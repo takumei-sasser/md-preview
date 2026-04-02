@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD · PREVIEW ユーザーガイド</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b6ef8;
+            --secondary: #00d4aa;
+            --bg: #0f1117;
+            --surface: #171b26;
+            --panel: #1d2232;
+            --border: #2a3050;
+            --text: #dde3f0;
+            --text-mute: #8ba5d4;
+            --heading: #ffffff;
+            --radius: 12px;
+            --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --display: 'Outfit', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 280px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 40px 24px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .nav-logo {
+            font-family: var(--display);
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--heading);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .nav-logo .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+
+        .nav-logo span {
+            color: var(--primary);
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav li {
+            margin-bottom: 8px;
+        }
+
+        nav a {
+            color: var(--text-mute);
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--heading);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        nav a.active {
+            color: var(--primary);
+            background: rgba(59, 110, 248, 0.1);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 60px 80px;
+            max-width: 900px;
+        }
+
+        header {
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-family: var(--display);
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--heading);
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        p.lead {
+            font-size: 18px;
+            color: var(--text-mute);
+        }
+
+        section {
+            margin-bottom: 80px;
+            scroll-margin-top: 40px;
+        }
+
+        h2 {
+            font-family: var(--display);
+            font-size: 28px;
+            color: var(--heading);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: var(--secondary);
+            margin: 32px 0 16px;
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        ul, ol {
+            margin-left: 24px;
+            margin-bottom: 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        code {
+            font-family: 'Consolas', monospace;
+            background: var(--panel);
+            color: var(--secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        /* Alerts Style */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid;
+            display: flex;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .alert-note { border-color: var(--primary); }
+        .alert-tip { border-color: var(--secondary); }
+        .alert-warning { border-color: #e6a817; }
+        .alert-danger { border-color: #f04650; }
+
+        .alert-title {
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .feature-item strong {
+            display: block;
+            color: var(--heading);
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        kbd {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 12px;
+            box-shadow: 0 2px 0 var(--border);
+        }
+
+        footer {
+            margin-top: 100px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            color: var(--text-mute);
+            font-size: 14px;
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            aside { display: none; }
+            main { padding: 40px 24px; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="nav-logo">
+            <div class="dot"></div>MD<span>・</span>PREVIEW
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#intro">概要</a></li>
+                <li><a href="#getting-started">はじめかた</a></li>
+                <li><a href="#features">主な機能</a></li>
+                <li><a href="#markdown">Markdown 記法</a></li>
+                <li><a href="#mermaid">図表 (Mermaid)</a></li>
+                <li><a href="#alerts">アラート記法</a></li>
+                <li><a href="#export">エクスポート</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <header>
+            <h1>MD · PREVIEW User Guide</h1>
+            <p class="lead">シンプルで強力な、Webベースの Markdown プレビューツールの使い方を解説します。</p>
+        </header>
+
+        <section id="intro">
+            <h2>ツールについて</h2>
+            <p><strong>MD · PREVIEW</strong> は、単一の HTML ファイルで動作するエンジニア向けドキュメント作成支援ツールです。インストール不要でブラウザさえあれば、どこでも高精度なプレビューと HTML 書き出しが可能です。</p>
+            <div class="grid">
+                <div class="feature-item">
+                    <strong>リアルタイムレンダリング</strong>
+                    入力した内容が即座に右側のプレビューに反映されます。
+                </div>
+                <div class="feature-item">
+                    <strong>ポータブル・デザイン</strong>
+                    システム標準フォントと軽量なライブラリ構成により、オフラインでも正しく動作します。
+                </div>
+            </div>
+        </section>
+
+        <section id="getting-started">
+            <h2>はじめかた</h2>
+            <ol>
+                <li><strong>Markdown を書く</strong>: 左側のエディタエリアに Markdown を入力します。</li>
+                <li><strong>プレビューを確認する</strong>: 右側のプレビューエリアにレンダリング結果が表示されます。</li>
+                <li><strong>HTML を保存する</strong>: 画面右上の「HTML保存」ボタンから、配布用の HTML ファイルをダウンロードできます。</li>
+            </ol>
+            <div class="alert alert-tip">
+                <div>
+                    <div class="alert-title">Tip</div>
+                    操作に迷ったら、右上の「入力例表示」ボタンを押してみてください。全ての機能を含んだサンプルコードを挿入できます。
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <h2>便利なツールバー機能</h2>
+            <p>画面上部のボタン群から、以下の操作が可能です。</p>
+            <ul>
+                <li><strong>テーマ切替</strong>: ライトモードとダークモードを瞬時に切り替えます。</li>
+                <li><strong>ソース表示</strong>: プレビューエリアを HTML ソースコード表示に切り替え、レンダリング結果のタグを確認できます。</li>
+                <li><strong>クリア</strong>: エディタの内容を全て消去します。</li>
+                <li><strong>全ソース表示</strong>: このツール自体の HTML コードを表示・コピーできます。</li>
+            </ul>
+        </section>
+
+        <section id="markdown">
+            <h2>Markdown 記法</h2>
+            <p>標準的な Markdown 記法に加え、以下の機能に対応しています。</p>
+            <ul>
+                <li><strong>シンタックスハイライト</strong>: プログラミングコードの言語に応じた色分け表示が可能です。</li>
+                <li><strong>テーブル</strong>: 表形式のデータを美しく表示します。</li>
+                <li><strong>チェックリスト</strong>: <code>- [x]</code> 形式のタスク管理記法に対応しています。</li>
+            </ul>
+        </section>
+
+        <section id="mermaid">
+            <h2>図表の描画 (Mermaid)</h2>
+            <p>Mermaid.js を内蔵しており、コード形式で様々な図表を描画できます。</p>
+            <div class="card">
+                <p><strong>利用例:</strong></p>
+                <code>```mermaid<br>graph TD<br>  A[開始] --> B{判定}<br>  B -->|Yes| C[処理]<br>  B -->|No| D[終了]<br>```</code>
+            </div>
+        </section>
+
+        <section id="alerts">
+            <h2>GitHub スタイルアラート</h2>
+            <p>ドキュメントの中で特に強調したい内容がある場合、GitHub スタイルのアラートが利用可能です。</p>
+            <div class="alert alert-note">
+                <div><div class="alert-title">NOTE</div>一般的な情報や補足説明。</div>
+            </div>
+            <div class="alert alert-tip">
+                <div><div class="alert-title">TIP</div>役立つヒントや推奨事項。</div>
+            </div>
+            <div class="alert alert-warning">
+                <div><div class="alert-title">WARNING</div>注意が必要な事項。</div>
+            </div>
+            <div class="alert alert-danger">
+                <div><div class="alert-title">DANGER</div>重大なリスクや警告。</div>
+            </div>
+        </section>
+
+        <section id="export">
+            <h2>HTML エクスポート</h2>
+            <p>「HTML保存」を実行すると、以下のような特徴を持つドキュメントが生成されます。</p>
+            <ul>
+                <li><strong>目次の自動生成</strong>: ドキュメント内の見出し（h1〜h4）を抽出し、サイドバーにナビゲーションを表示します。</li>
+                <li><strong>テーマ固定</strong>: 保存時のテーマ（ライト/ダーク）がそのまま適用された状態で出力されます。</li>
+                <li><strong>完全スタンドアロン</strong>: 生成されたファイル一つで全てのスタイルとスクリプトが完結します。</li>
+            </ul>
+        </section>
+
+        <footer>
+            &copy; 2026 MD · PREVIEW - Simple & Powerful Documentation Tool.
+        </footer>
+    </main>
+
+    <script>
+        // Simple scroll spy to highlight active nav
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
