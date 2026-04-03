@@ -264,6 +264,8 @@
             <ul>
                 <li><a href="#intro">概要</a></li>
                 <li><a href="#getting-started">はじめかた</a></li>
+                <li><a href="#drafts">下書きと自動保存</a></li>
+                <li><a href="#file-ops">ファイル操作</a></li>
                 <li><a href="#features">主な機能</a></li>
                 <li><a href="#markdown">Markdown 記法</a></li>
                 <li><a href="#mermaid">図表 (Mermaid)</a></li>
@@ -309,13 +311,42 @@
             </div>
         </section>
 
+        <section id="drafts">
+            <h2>下書きと自動保存</h2>
+            <p>書いた内容を失わないための強力なデータ保護機能を備えています。</p>
+            <div class="grid">
+                <div class="feature-item">
+                    <strong>自動保存 (Last State)</strong>
+                    入力内容は常にブラウザに自動保存されます。タブを閉じたりリロードしても、最後に入力していた状態から再開できます。
+                </div>
+                <div class="feature-item">
+                    <strong>名前付き保存 (Drafts)</strong>
+                    「保存」ボタンから、現在の内容に名前を付けて「下書き」として保存できます。
+                    タイトルは <code># 見出し</code> から自動的に推測され、手動での変更も可能です。
+                </div>
+            </div>
+            <div class="card">
+                <strong>下書きの管理:</strong>
+                「下書き」ボタンを押すと、保存済みデータの一覧が表示されます。ここから過去のデータを「読み込み」したり、不要になったものを「削除」できます。
+            </div>
+        </section>
+
+        <section id="file-ops">
+            <h2>ファイル操作</h2>
+            <p>ローカルにある既存の Markdown ファイルを簡単に編集できます。</p>
+            <ul>
+                <li><strong>ファイルを開く</strong>: ツールバーの「開く」ボタンからファイルを選択して読み込めます。</li>
+                <li><strong>ドラッグ＆ドロップ</strong>: パソコン上の <code>.md</code> ファイルを直接エディタエリアにドロップすることで、素早く内容を読み込めます。</li>
+            </ul>
+        </section>
+
         <section id="features">
             <h2>便利なツールバー機能</h2>
             <p>画面上部のボタン群から、以下の操作が可能です。</p>
             <ul>
                 <li><strong>テーマ切替</strong>: ライトモードとダークモードを瞬時に切り替えます。</li>
-                <li><strong>ソース表示</strong>: プレビューエリアを HTML ソースコード表示に切り替え、レンダリング結果のタグを確認できます。</li>
-                <li><strong>クリア</strong>: エディタの内容を全て消去します。</li>
+                <li><strong>ソース表示</strong>: プレビューエリアを Markdown ソースまたはプレビュー表示に切り替えます。</li>
+                <li><strong>クリア</strong>: エディタの内容を全て消去します（localStorage の最新状態もリセットされます）。</li>
                 <li><strong>全ソース表示</strong>: このツール自体の HTML コードを表示・コピーできます。</li>
             </ul>
         </section>
@@ -352,7 +383,10 @@
                 <div><div class="alert-title">WARNING</div>注意が必要な事項。</div>
             </div>
             <div class="alert alert-danger">
-                <div><div class="alert-title">DANGER</div>重大なリスクや警告。</div>
+                <div><div class="alert-title">DANGER / CAUTION</div>重大なリスクや警告（CAUTION は DANGER と同様のデザインです）。</div>
+            </div>
+            <div class="alert alert-note" style="border-color: var(--secondary)">
+                <div><div class="alert-title" style="color: var(--secondary)">IMPORTANT</div>非常に重要な指示。</div>
             </div>
         </section>
 
