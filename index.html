@@ -14,45 +14,45 @@
 
   <style>
     :root {
-      --bg: #0f1117;
-      --surface: #171b26;
-      --panel: #1d2232;
-      --border: #2a3050;
-      --accent: #3b6ef8;
-      --accent2: #00d4aa;
-      --text: #dde3f0;
-      --text-mute: #6b7899;
+      --bg: #05070a; /* 漆黒よりも深い紺 */
+      --surface: #0f111a;
+      --panel: #0f111a;
+      --border: rgba(255, 255, 255, 0.08); /* 極薄の境界線 */
+      --accent: #3e63dd; /* インテリジェンスな青 */
+      --accent2: #00e5a4; /* 活力のあるエメラルド */
+      --text: #eef1f5;
+      --text-mute: #8892b0;
       --heading: #ffffff;
-      --code-bg: #0a0d14;
+      --code-bg: #010204;
       --warn-bg: rgba(255, 190, 50, 0.08);
       --warn-bdr: #e6a817;
-      --info-bg: rgba(59, 110, 248, 0.08);
-      --info-bdr: #3b6ef8;
-      --tip-bg: rgba(0, 212, 170, 0.08);
-      --tip-bdr: #00d4aa;
+      --info-bg: rgba(62, 99, 221, 0.08);
+      --info-bdr: #3e63dd;
+      --tip-bg: rgba(0, 229, 164, 0.08);
+      --tip-bdr: #00e5a4;
       --danger-bg: rgba(240, 70, 80, 0.08);
       --danger-bdr: #f04650;
-      --radius: 6px;
-      --mono: 'Consolas', 'Monaco', 'Courier New', monospace;
-      --sans: 'Meiryo', 'Segoe UI', 'Yu Gothic', 'Hiragino Kaku Gothic ProN', sans-serif;
-      --display: 'Meiryo', 'Yu Gothic', sans-serif;
+      --radius: 8px;
+      --mono: 'JetBrains Mono', 'Consolas', monospace;
+      --sans: 'Inter', 'Meiryo', sans-serif;
+      --glass: blur(12px) saturate(180%);
     }
 
     :root[data-theme='light'] {
-      --bg: #f8f9fa;
+      --bg: #f5f7fa;
       --surface: #ffffff;
-      --panel: #f1f3f5;
-      --border: #dee2e6;
-      --accent: #3b6ef8;
+      --panel: #ffffff;
+      --border: rgba(0, 0, 0, 0.08);
+      --accent: #3e63dd;
       --accent2: #00a884;
-      --text: #212529;
-      --text-mute: #6c757d;
-      --heading: #111111;
-      --code-bg: #0a0d14;
+      --text: #1a1c23;
+      --text-mute: #64748b;
+      --heading: #0f172a;
+      --code-bg: #f8fafc;
       --warn-bg: rgba(255, 190, 50, 0.15);
       --warn-bdr: #e6a817;
-      --info-bg: rgba(59, 110, 248, 0.1);
-      --info-bdr: #3b6ef8;
+      --info-bg: rgba(62, 99, 221, 0.1);
+      --info-bdr: #3e63dd;
       --tip-bg: rgba(0, 212, 170, 0.1);
       --tip-bdr: #00d4aa;
       --danger-bg: rgba(240, 70, 80, 0.1);
@@ -82,21 +82,29 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
-      height: 48px;
-      background: var(--surface);
+      padding: 0 24px;
+      height: 56px;
+      background: rgba(15, 17, 26, 0.7);
+      backdrop-filter: var(--glass);
+      -webkit-backdrop-filter: var(--glass);
       border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    :root[data-theme='light'] #header {
+      background: rgba(255, 255, 255, 0.7);
     }
 
     .logo {
-      font-family: var(--display);
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 800;
-      letter-spacing: .08em;
+      letter-spacing: .12em;
       color: var(--heading);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .logo span {
@@ -104,56 +112,74 @@
     }
 
     .logo .dot {
-      width: 6px;
-      height: 6px;
+      width: 10px;
+      height: 10px;
       background: var(--accent2);
       border-radius: 50%;
+      box-shadow: 0 0 20px var(--accent2), 0 0 10px var(--accent2), 0 0 5px #fff;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     .header-actions {
       display: flex;
-      gap: 8px;
+      align-items: center;
+      gap: 12px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
+      gap: 8px;
+      padding: 8px 16px;
       border-radius: var(--radius);
       border: 1px solid var(--border);
-      background: var(--panel);
+      background: rgba(255, 255, 255, 0.03);
       color: var(--text);
       font-family: var(--mono);
       font-size: 11px;
       font-weight: 500;
       letter-spacing: .04em;
       cursor: pointer;
-      transition: all .15s;
+      transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
       white-space: nowrap;
     }
 
     .btn:hover {
       border-color: var(--accent);
+      background: rgba(62, 99, 221, 0.1);
       color: var(--accent);
-      background: rgba(59, 110, 248, .08);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
     }
 
     .btn.primary {
       background: var(--accent);
       border-color: var(--accent);
       color: #fff;
+      box-shadow: 0 4px 14px rgba(62, 99, 221, 0.4);
     }
 
     .btn.primary:hover {
-      background: #5580fa;
+      background: #4f73eb;
+      box-shadow: 0 6px 20px rgba(62, 99, 221, 0.5);
     }
 
     /* LAYOUT */
     #app {
       display: grid;
       grid-template-columns: 1fr 4px 1fr;
-      height: calc(100vh - 48px);
+      height: calc(100vh - 56px);
+      background: var(--bg);
     }
 
     .pane {
@@ -201,49 +227,64 @@
     #editor {
       flex: 1;
       width: 100%;
-      padding: 20px;
+      padding: 24px;
       background: var(--panel);
       color: var(--text);
       font-family: var(--mono);
-      font-size: 13px;
-      line-height: 1.75;
+      font-size: 14px;
+      line-height: 1.8;
       border: none;
       outline: none;
       resize: none;
       tab-size: 2;
       overflow: auto;
+      transition: background 0.3s;
+    }
+
+    #editor:focus {
+      background: rgba(255, 255, 255, 0.02);
     }
 
     #editor::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
     }
 
     #editor::-webkit-scrollbar-thumb {
       background: var(--border);
-      border-radius: 3px;
+      border-radius: 10px;
     }
 
     /* PREVIEW */
     #preview-wrap {
       flex: 1;
       overflow: auto;
-      background: var(--panel);
+      background: var(--bg);
+      padding: 40px 20px;
     }
 
     #preview-wrap::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
 
     #preview-wrap::-webkit-scrollbar-thumb {
       background: var(--border);
-      border-radius: 3px;
+      border-radius: 10px;
     }
 
     #preview {
-      padding: 28px 32px;
-      max-width: 860px;
+      padding: 48px 60px;
+      max-width: 800px;
       margin: 0 auto;
+      background: var(--panel);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      min-height: 100%;
+    }
+
+    :root[data-theme='light'] #preview {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     }
 
     /* RAW VIEW */
@@ -270,42 +311,67 @@
     #preview h2,
     #preview h3,
     #preview h4 {
-      font-family: var(--display);
       font-weight: 700;
-      line-height: 1.3;
+      line-height: 1.25;
       color: var(--heading);
+      letter-spacing: -0.02em;
     }
 
     #preview h1 {
-      font-size: 26px;
-      margin: 0 0 24px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--accent);
+      font-size: 32px;
+      margin: 0 0 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    #preview h1::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 60px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
     }
 
     #preview h2 {
-      font-size: 20px;
-      margin: 36px 0 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
+      font-size: 24px;
+      margin: 48px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    #preview h2::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 24px;
+      background: var(--accent);
+      border-radius: 2px;
+      opacity: 0.5;
     }
 
     #preview h3 {
-      font-size: 16px;
-      margin: 28px 0 12px;
+      font-size: 18px;
+      margin: 32px 0 16px;
       color: var(--accent2);
     }
 
     #preview h4 {
       font-size: 14px;
-      margin: 20px 0 8px;
+      margin: 24px 0 12px;
       color: var(--text-mute);
-      letter-spacing: .06em;
       text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
 
     #preview p {
-      margin: 0 0 14px;
+      margin: 0 0 18px;
+      font-size: 15px;
+      line-height: 1.7;
     }
 
     #preview ul,
@@ -413,27 +479,45 @@
     /* ALERTS */
     .alert {
       border-radius: var(--radius);
-      padding: 14px 16px;
+      padding: 12px 16px;
       margin: 16px 0;
-      border-left: 3px solid;
+      border: 1px solid transparent;
+      border-left-width: 4px;
       display: flex;
       gap: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .alert-icon {
-      font-size: 16px;
+      font-size: 18px;
       flex-shrink: 0;
-      margin-top: 1px;
+      margin-top: 0px;
     }
 
     .alert-title {
-      font-weight: 600;
+      font-weight: 700;
       font-size: 13px;
-      margin-bottom: 4px;
+      margin-bottom: 0px;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .alert-content {
-      font-size: 13px;
+      font-size: 14px;
+      line-height: 1.4;
+      margin-top: 0px !important;
+    }
+
+    .alert-content * {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .alert-content br + br {
+      display: block;
+      content: "";
+      margin-top: 8px !important;
     }
 
     .alert-note {
@@ -492,13 +576,16 @@
 
     /* MERMAID */
     .mermaid-wrap {
-      background: var(--surface);
+      background: var(--code-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
-      margin: 16px 0;
+      padding: 32px;
+      margin: 24px 0;
       text-align: center;
       overflow: auto;
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.2);
+      background-image: radial-gradient(var(--border) 1px, transparent 1px);
+      background-size: 20px 20px;
     }
 
     .mermaid-wrap svg {
@@ -541,18 +628,22 @@
       bottom: 40px;
       left: 50%;
       transform: translateX(-50%) translateY(20px);
-      background: var(--surface);
+      background: rgba(15, 17, 26, 0.8);
+      backdrop-filter: var(--glass);
+      -webkit-backdrop-filter: var(--glass);
       border: 1px solid var(--accent2);
       color: var(--accent2);
       font-family: var(--mono);
       font-size: 12px;
+      font-weight: 600;
       letter-spacing: .06em;
-      padding: 8px 20px;
-      border-radius: 20px;
+      padding: 10px 24px;
+      border-radius: 30px;
       opacity: 0;
       pointer-events: none;
-      transition: all .25s;
-      z-index: 999;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
     #toast.show {
@@ -563,13 +654,24 @@
     /* DIVIDER */
     #divider {
       width: 4px;
-      background: var(--border);
+      background: var(--bg);
       cursor: col-resize;
-      transition: background .15s;
+      transition: background .2s;
+      position: relative;
     }
 
-    #divider:hover,
-    #divider.dragging {
+    #divider::after {
+      content: '';
+      position: absolute;
+      left: 1px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    #divider:hover::after,
+    #divider.dragging::after {
       background: var(--accent);
     }
   </style>
@@ -582,15 +684,14 @@
       <div class="dot"></div>MD<span>・</span>PREVIEW
     </div>
     <div class="header-actions">
-      <button class="btn" onclick="toggleTheme()">テーマ切替</button>
-      <button class="btn" onclick="showAppSource()">全ソース表示</button>
-      <button class="btn" id="btn-raw" onclick="toggleRaw()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="16 18 22 12 16 6" />
-          <polyline points="8 6 2 12 8 18" />
-        </svg>ソース表示
+      <button class="btn" onclick="toggleTheme()" title="テーマ切替">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
       </button>
+
       <div style="width: 1px; height: 16px; background: var(--border); margin: 0 4px;"></div>
+      
       <button class="btn" onclick="openFilePicker()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
@@ -612,9 +713,10 @@
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>下書き
       </button>
+      
       <div style="width: 1px; height: 16px; background: var(--border); margin: 0 4px;"></div>
+      
       <button class="btn" onclick="clearEditor()">クリア</button>
-      <button class="btn" onclick="document.getElementById('sample-dlg').showModal()">入力例表示</button>
       <button class="btn primary" onclick="downloadHTML()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
@@ -622,6 +724,14 @@
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>HTML保存
       </button>
+
+      <button class="btn" onclick="document.getElementById('settings-dlg').showModal()" title="設定">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+
       <input type="file" id="file-input" style="display:none" accept=".md,.markdown,.txt" onchange="handleFileSelect(event)">
     </div>
   </div>
@@ -657,11 +767,63 @@
 
   <style>
     #sample-dlg::backdrop,
-    #app-src-dlg::backdrop {
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(2px)
+    #app-src-dlg::backdrop,
+    #save-draft-dlg::backdrop,
+    #draft-list-dlg::backdrop {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+    }
+
+    dialog {
+      background: rgba(15, 17, 26, 0.8) !important;
+      backdrop-filter: var(--glass);
+      -webkit-backdrop-filter: var(--glass);
+      border: 1px solid var(--border) !important;
+      color: var(--text);
+      box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5);
+    }
+
+    :root[data-theme='light'] dialog {
+      background: rgba(255, 255, 255, 0.8) !important;
     }
   </style>
+
+  <dialog id="settings-dlg"
+    style="margin:auto;border:none;border-radius:8px;background:var(--surface);color:var(--text);padding:0;max-width:400px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+    <div class="dlg-header"
+      style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)">
+      <h4 style="margin:0;color:var(--heading)">設定</h4>
+      <button class="dlg-close" onclick="document.getElementById('settings-dlg').close()"
+        style="background:transparent;border:none;color:var(--text-mute);font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div class="dlg-body" style="padding:20px;">
+      <div style="margin-bottom:20px;">
+        <label style="display:flex;align-items:center;gap:12px;cursor:pointer;font-size:13px;color:var(--text)">
+          <input type="checkbox" id="check-raw" onchange="toggleRaw()" style="width:16px;height:16px;accent-color:var(--accent)">
+          Markdownソースを表示
+        </label>
+        <p style="font-size:11px;color:var(--text-mute);margin:4px 0 0 28px;">プレビューエリアにレンダリング前のソースを表示します</p>
+      </div>
+      
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <button class="btn" onclick="document.getElementById('settings-dlg').close(); showAppSource();" style="justify-content:center;width:100%;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg> index.html 全ソース表示
+        </button>
+        <button class="btn" onclick="document.getElementById('settings-dlg').close(); document.getElementById('sample-dlg').showModal();" style="justify-content:center;width:100%;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg> 入力例（サンプル）を表示
+        </button>
+      </div>
+    </div>
+  </dialog>
 
   <dialog id="app-src-dlg"
     style="margin:auto;border:none;border-radius:8px;background:var(--surface);color:var(--text);padding:0;max-width:800px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.5);">
@@ -864,13 +1026,13 @@ gantt
       theme: 'dark',
       securityLevel: 'loose',
       themeVariables: {
-        background: '#171b26',
-        primaryColor: '#1d2232',
-        primaryTextColor: '#dde3f0',
-        primaryBorderColor: '#3b6ef8',
-        lineColor: '#6b7899',
-        secondaryColor: '#1d2232',
-        tertiaryColor: '#0f1117',
+        background: '#010204',
+        primaryColor: '#0f111a',
+        primaryTextColor: '#eef1f5',
+        primaryBorderColor: '#3e63dd',
+        lineColor: '#8892b0',
+        secondaryColor: '#0f111a',
+        tertiaryColor: '#05070a',
       }
     });
 
@@ -891,11 +1053,16 @@ gantt
 
     renderer.blockquote = function (token) {
       const text = typeof token === 'string' ? token : (token.text || '');
+      // コンテンツ全体をフラットに取得するための正規表現
       const m = text.match(/^\s*<p>\[!(NOTE|TIP|WARNING|DANGER|CAUTION|IMPORTANT)\]\s*([\s\S]*?)<\/p>\s*$/i);
       if (m) {
         const type = m[1].toLowerCase();
         const info = ALERT_MAP[type] || { icon: 'ℹ', label: type };
-        return `<div class="alert alert-${type}"><div class="alert-icon">${info.icon}</div><div class="alert-body"><div class="alert-title">${info.label}</div><div class="alert-content">${m[2].trim()}</div></div></div>`;
+        // すべての <p>...</p> を取り除き、中身の改行（あれば）を維持または統合
+        let inner = m[2].trim();
+        // 内部にさらに <p> が含まれる場合の再帰的なタグ除去
+        inner = inner.replace(/<\/?p[^>]*>/gi, '').trim();
+        return `<div class="alert alert-${type}"><div class="alert-icon">${info.icon}</div><div><div class="alert-title">${info.label}</div><div class="alert-content">${inner}</div></div></div>`;
       }
       return `<blockquote>${text}</blockquote>`;
     };
@@ -957,9 +1124,9 @@ gantt
       document.getElementById('preview-wrap').style.display = rawVisible ? 'none' : '';
       document.getElementById('raw-view').style.display = rawVisible ? 'block' : 'none';
       if (rawVisible) document.getElementById('raw-content').textContent = document.getElementById('editor').value;
-      document.getElementById('btn-raw').innerHTML = rawVisible
-        ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>プレビュー表示`
-        : `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>ソース表示`;
+      
+      // 設定ダイアログのチェック状態を同期
+      document.getElementById('check-raw').checked = rawVisible;
     }
 
     // ── HTML ダウンロード ───────────────────────────────────
@@ -971,26 +1138,38 @@ gantt
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
       
       const themeColors = isDark ? `
-  --bg: #0f1117;
-  --surface: #171b26;
-  --panel: #1d2232;
-  --border: #2a3050;
-  --accent: #3b6ef8;
-  --accent2: #00d4aa;
-  --text: #dde3f0;
-  --text-mute: #6b7899;
+  --bg: #05070a;
+  --surface: #0f111a;
+  --panel: #0f111a;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #3e63dd;
+  --accent2: #00e5a4;
+  --text: #eef1f5;
+  --text-mute: #8892b0;
   --heading: #ffffff;
-  --code-bg: #0a0d14;` : `
-  --bg: #f8f9fa;
+  --code-bg: #010204;
+  --info-bg: rgba(62, 99, 221, 0.08);
+  --tip-bg: rgba(0, 229, 164, 0.08);
+  --warn-bg: rgba(255, 190, 50, 0.08);
+  --warn-bdr: #e6a817;
+  --danger-bg: rgba(240, 70, 80, 0.08);
+  --danger-bdr: #f04650;` : `
+  --bg: #f5f7fa;
   --surface: #ffffff;
-  --panel: #f1f3f4;
-  --border: #dee2e6;
-  --accent: #3b6ef8;
+  --panel: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --accent: #3e63dd;
   --accent2: #00a884;
-  --text: #212529;
-  --text-mute: #6c757d;
-  --heading: #111111;
-  --code-bg: #f1f3f5;`;
+  --text: #1a1c23;
+  --text-mute: #64748b;
+  --heading: #0f172a;
+  --code-bg: #f8fafc;
+  --info-bg: rgba(62, 99, 221, 0.1);
+  --tip-bg: rgba(0, 212, 170, 0.1);
+  --warn-bg: rgba(255, 190, 50, 0.15);
+  --warn-bdr: #e6a817;
+  --danger-bg: rgba(240, 70, 80, 0.1);
+  --danger-bdr: #f04650;`;
 
       const out = `<!DOCTYPE html>
 <html lang="ja" data-theme="${isDark ? 'dark' : 'light'}">
@@ -1020,28 +1199,32 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 #main-content::-webkit-scrollbar { width: 6px; }
 #main-content::-webkit-scrollbar-thumb { background: var(--border); }
 .content-wrap { max-width: 860px; margin: 0 auto; }
-h1 { font-size: 26px; margin: 0 0 24px; padding-bottom: 12px; border-bottom: 2px solid var(--accent); color: var(--heading); }
-h2 { font-size: 20px; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: var(--heading); }
-h3 { font-size: 16px; margin: 28px 0 12px; color: var(--accent2); }
-h4 { font-size: 14px; margin: 20px 0 8px; color: var(--text-mute); text-transform: uppercase; }
-p { margin: 0 0 14px; } ul, ol { margin: 0 0 14px 20px; } li { margin-bottom: 4px; }
-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
-th { background: var(--surface); color: var(--text-mute); padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
-td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
-pre { background: var(--code-bg); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; margin: 16px 0; overflow: auto; padding: 16px 20px; }
-code { font-family: monospace; font-size: 12px; background: var(--code-bg); color: var(--accent2); padding: 2px 6px; border-radius: 3px; }
+h1 { font-size: 32px; margin: 0 0 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); color: var(--heading); position: relative; }
+h1::after { content: ''; position: absolute; left: 0; bottom: -1px; width: 60px; height: 3px; background: var(--accent); border-radius: 2px; }
+h2 { font-size: 24px; margin: 48px 0 20px; color: var(--heading); display: flex; align-items: center; gap: 12px; }
+h2::before { content: ''; display: block; width: 4px; height: 24px; background: var(--accent); border-radius: 2px; opacity: 0.5; }
+h3 { font-size: 18px; margin: 32px 0 16px; color: var(--accent2); }
+h4 { font-size: 14px; margin: 24px 0 12px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.1em; }
+p { margin: 0 0 18px; font-size: 15px; } ul, ol { margin: 0 0 18px 20px; } li { margin-bottom: 6px; }
+table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+th { background: rgba(0,0,0,0.05); color: var(--text-mute); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+pre { background: var(--code-bg); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 8px; margin: 24px 0; overflow: auto; padding: 20px; }
+code { font-family: monospace; font-size: 13px; background: var(--code-bg); color: var(--accent2); padding: 2px 6px; border-radius: 4px; }
 pre code { background: transparent; color: inherit; padding: 0; }
-hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
-strong { color: var(--heading); font-weight: 600; } em { color: var(--accent2); }
-.alert { border-radius: 6px; padding: 14px 16px; margin: 16px 0; border-left: 3px solid; display: flex; gap: 12px; }
-.alert-icon { font-size: 16px; flex-shrink: 0; }
-.alert-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
-.alert-note { background: rgba(59,110,248,.08); border-color: var(--accent); } .alert-note .alert-title { color: var(--accent); }
-.alert-tip { background: rgba(0,212,170,.08); border-color: var(--accent2); } .alert-tip .alert-title { color: var(--accent2); }
-.alert-warning { background: rgba(255,190,50,.08); border-color: #e6a817; } .alert-warning .alert-title { color: #e6a817; }
-.alert-danger { background: rgba(240,70,80,.08); border-color: #f04650; } .alert-danger .alert-title { color: #f04650; }
-.alert-important { background: rgba(59,110,248,.08); border-color: var(--accent2); } .alert-important .alert-title { color: var(--accent2); }
-.mermaid-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin: 16px 0; text-align: center; }
+hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+strong { color: var(--heading); font-weight: 700; } em { color: var(--accent2); }
+.alert { border-radius: 8px; padding: 12px 16px; margin: 16px 0; border: 1px solid transparent; border-left-width: 4px; display: flex; gap: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.alert-icon { font-size: 18px; flex-shrink: 0; }
+.alert-title { font-weight: 700; font-size: 13px; margin-bottom: 0px; text-transform: uppercase; letter-spacing: 0.05em; }
+.alert-content { font-size: 14px; line-height: 1.4; margin: 0 !important; }
+.alert-content * { margin: 0 !important; }
+.alert-note { background: var(--info-bg); border-color: var(--accent); } .alert-note .alert-title { color: var(--accent); }
+.alert-tip { background: var(--tip-bg); border-color: var(--accent2); } .alert-tip .alert-title { color: var(--accent2); }
+.alert-warning { background: var(--warn-bg); border-color: var(--warn-bdr); } .alert-warning .alert-title { color: var(--warn-bdr); }
+.alert-danger { background: var(--danger-bg); border-color: var(--danger-bdr); } .alert-danger .alert-title { color: var(--danger-bdr); }
+.alert-important { background: var(--info-bg); border-color: var(--accent2); } .alert-important .alert-title { color: var(--accent2); }
+.mermaid-wrap { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 32px; margin: 24px 0; text-align: center; background-image: radial-gradient(var(--border) 1px, transparent 1px); background-size: 20px 20px; }
 .mermaid-wrap svg { max-width: 100%; height: auto; }
 .tbtn { appearance: none; background: var(--panel); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; transition: 0.2s; }
 .tbtn:hover { border-color: var(--accent); color: var(--accent); }
@@ -1126,19 +1309,19 @@ window.onload = init;
         themeVariables: isLight ? {
           background: '#ffffff',
           primaryColor: '#f1f3f5',
-          primaryTextColor: '#212529',
-          primaryBorderColor: '#3b6ef8',
-          lineColor: '#6c757d',
-          secondaryColor: '#f1f3f4',
-          tertiaryColor: '#f8f9fa',
+          primaryTextColor: '#1a1c23',
+          primaryBorderColor: '#3e63dd',
+          lineColor: '#64748b',
+          secondaryColor: '#f8fafc',
+          tertiaryColor: '#f5f7fa',
         } : {
-          background: '#171b26',
-          primaryColor: '#1d2232',
-          primaryTextColor: '#dde3f0',
-          primaryBorderColor: '#3b6ef8',
-          lineColor: '#6b7899',
-          secondaryColor: '#1d2232',
-          tertiaryColor: '#0f1117',
+          background: '#010204',
+          primaryColor: '#0f111a',
+          primaryTextColor: '#eef1f5',
+          primaryBorderColor: '#3e63dd',
+          lineColor: '#8892b0',
+          secondaryColor: '#0f111a',
+          tertiaryColor: '#05070a',
         }
       });
       render();
@@ -1330,8 +1513,10 @@ window.onload = init;
     document.addEventListener('mousemove', e => {
       if (!dragging) return;
       const r = appEl.getBoundingClientRect();
-      const pct = Math.min(80, Math.max(20, (e.clientX - r.left) / r.width * 100));
+      const pct = Math.min(85, Math.max(15, (e.clientX - r.left) / r.width * 100));
       appEl.style.gridTemplateColumns = `${pct.toFixed(1)}fr 4px ${(100 - pct).toFixed(1)}fr`;
+      // 分割幅変更時に再描画（Mermaidのリサイズ対応）
+      scheduleRender();
     });
     document.addEventListener('mouseup', () => { dragging = false; divider.classList.remove('dragging'); });
 
